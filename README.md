@@ -1,2 +1,2 @@
-# AntiInfoWithdrawal
-Anti WeChat Infomation withdrawal
+# WeChatSubscriptionArticles
+WeChat Subscription Articles’ Codes

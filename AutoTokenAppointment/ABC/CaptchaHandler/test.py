@@ -6,7 +6,7 @@ import numpy as np
 
 
 # 加载测试数据并进行相同预处理操作
-image = cv2.imread('./test_chars/H/2.jpg', 0)
+image = cv2.imread('./test_chars/H/face2.jpg', 0)
 output = image.copy()
 image = cv2.resize(image, (16, 16))
 # scale图像数据
