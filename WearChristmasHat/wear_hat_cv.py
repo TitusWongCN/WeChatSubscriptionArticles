@@ -50,12 +50,12 @@ resize_ratio = face_width / hat_brim_length
 hat_width = int(hat_img.width * resize_ratio)
 hat_height = int(hat_img.height * resize_ratio)
 hat_buffer = int(hat_height_buffer * resize_ratio)
+hat_img = hat_img.resize((hat_width, hat_height))  # convert size of hat
 
 hat_bottom = int(nose_bridge[0][1]) - hair_brim
 hat_top = hat_bottom - hat_height
 hat_left = int(chin[0][0])
 hat_right = hat_left + hat_width
-hat_img = hat_img.resize((hat_width, hat_height))  # convert size of hat
 
 # hat_img = hat_img.rotate(45)
 hat_region = hat_img
@@ -84,4 +84,4 @@ mask_region = mask_img
 human_region = (mask_left, mask_top, mask_right, mask_bottom)
 human_img.paste(mask_region, human_region, mask=mask_img)
 human_img.show()
-print('mask done')
+print('Done')
