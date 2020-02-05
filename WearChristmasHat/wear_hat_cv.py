@@ -8,7 +8,7 @@ def get_distance(point1, point2):
     return int(math.sqrt((point1[0] - point2[0])**2 + (point1[1] - point2[1])**2))
 
 
-image_path = './face2.png'
+image_path = './face1.png'
 human_img = Image.open(image_path)
 human_img = human_img.convert('RGBA')
 # 圣诞帽相关参数
@@ -51,15 +51,37 @@ hat_width = int(hat_img.width * resize_ratio)
 hat_height = int(hat_img.height * resize_ratio)
 hat_buffer = int(hat_height_buffer * resize_ratio)
 
-bottom = int(nose_bridge[0][1]) - hair_brim
-top = bottom - hat_height
-left = int(chin[0][0])
-right = left + hat_width
+hat_bottom = int(nose_bridge[0][1]) - hair_brim
+hat_top = hat_bottom - hat_height
+hat_left = int(chin[0][0])
+hat_right = hat_left + hat_width
 hat_img = hat_img.resize((hat_width, hat_height))  # convert size of hat
 
 # hat_img = hat_img.rotate(45)
 hat_region = hat_img
-human_region = (left, top + hat_buffer, right, bottom + hat_buffer)
+human_region = (hat_left, hat_top + hat_buffer, hat_right, hat_bottom + hat_buffer)
 human_img.paste(hat_region, human_region, mask=hat_img)
+# human_img.show()
+# print('hat done')
+
+# 口罩相关参数
+mask_img = Image.open("./mask.png")
+mask_height = 330.0
+mask_img = mask_img.convert('RGBA')
+
+mask_actual_height = get_distance(nose_bridge[0], chin[int(len(chin)/2)])
+mask_resize_ratio = mask_actual_height / mask_height
+mask_width = int(mask_img.width * mask_resize_ratio)
+mask_height = int(mask_img.height * mask_resize_ratio)
+
+mask_top = int(nose_bridge[0][1])
+mask_bottom = mask_top + mask_height
+mask_left = int((nose_bridge[0][0] + chin[int(len(chin)/2)][0] - mask_width)/2)
+mask_right = mask_left + mask_width
+mask_img = mask_img.resize((mask_width, mask_height))  # convert size of mask
+
+mask_region = mask_img
+human_region = (mask_left, mask_top, mask_right, mask_bottom)
+human_img.paste(mask_region, human_region, mask=mask_img)
 human_img.show()
-print('done')
+print('mask done')
